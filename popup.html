@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Blur Tables</title>
+  </head>
+  <body>
+    <h1>테이블 블러 설정</h1>
+
+    <fieldset>
+      <legend>일반 테이블 블러</legend>
+      <label>
+        <input type="checkbox" id="common-blurEmptyTd" checked />
+        공백 셀 블러 여부 </label
+      ><br />
+      <div class="input-wrapper">
+        <input
+          id="common-excludeList"
+          placeholder="제외 컬럼 (쉼표로 구분)"
+        /><button class="reset-btn" data-target="common-excludeList">
+          초기화
+        </button>
+      </div>
+      <div class="input-wrapper">
+        <input
+          id="common-includeList"
+          placeholder="포함 컬럼 (쉼표로 구분)"
+        /><button class="reset-btn" data-target="common-includeList">
+          초기화
+        </button>
+      </div>
+      <button id="run-common">실행</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>수평 테이블 블러</legend>
+      <label
+        ><input type="checkbox" id="horizen-blurEmptyTd" checked /> 공백 셀 블러
+        여부</label
+      ><br />
+      <div class="input-wrapper">
+        <input
+          id="horizen-excludeList"
+          placeholder="제외 컬럼 (쉼표로 구분)"
+        /><button class="reset-btn" data-target="horizen-excludeList">
+          초기화
+        </button>
+      </div>
+      <button id="run-horizen">실행</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>셀렉터 리스트 블러</legend>
+      <div class="input-wrapper">
+        <input
+          id="selector-list"
+          placeholder="셀렉터 리스트 (쉼표로 구분)"
+        /><button class="reset-btn" data-target="selector-list">초기화</button>
+      </div>
+      <button id="run-selector">실행</button>
+      <span class="example"
+        >기본값: #pv_id_1 > span, .navbar-user, .text-box-tx</span
+      >
+    </fieldset>
+
+    <fieldset>
+      <legend>행정 2차 현황 테이블 블러러</legend>
+      <label
+        ><input type="checkbox" id="primevue-blurEmptyTd" checked /> 공백 셀
+        블러 여부</label
+      ><br />
+      <div class="input-wrapper">
+        <input
+          id="primevue-excludeList"
+          placeholder="제외 컬럼 (쉼표로 구분)"
+        /><button class="reset-btn" data-target="primevue-excludeList">
+          초기화
+        </button>
+      </div>
+      <button id="run-primevue">실행</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>통합 실행</legend>
+      <button id="run-detailed">상세블러실행</button>
+      <button id="run-status">현황블러실행</button>
+      <button id="run-all">전체실행</button>
+    </fieldset>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

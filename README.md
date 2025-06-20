@@ -1,0 +1,1 @@
+# sppt-blur-extension

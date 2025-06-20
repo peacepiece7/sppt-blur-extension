@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Table Blur Controller",
+  "version": "1.0",
+  "description": "UI 기반 테이블 블러링 도구",
+  "permissions": ["scripting", "activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
