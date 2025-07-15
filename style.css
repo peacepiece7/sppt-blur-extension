@@ -61,3 +61,7 @@ button:hover {
   margin-top: 0.5em;
   margin-left: 0.5em;
 }
+label {
+  margin-bottom: 0.2em;
+  display: inline-block;
+}

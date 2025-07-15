@@ -3,6 +3,7 @@ console.log('content.js loaded')
 
 function blurTableCommon({
   blurEmptyTd = true,
+  blurInput = true,
   excludeList = [],
   includeList = [],
 }) {
@@ -37,7 +38,10 @@ function blurTableCommon({
     if (idx % 2 === 1) {
       table.querySelectorAll('tbody tr').forEach((tr) => {
         tr.querySelectorAll('td').forEach((td, tdIdx) => {
-          if (excludeIndexes.includes(tdIdx)) {
+          // blurInput 체크: td의 children에 input이 있으면 blur 미적용
+
+          const hasInput = !blurInput && td.querySelector('input')
+          if (excludeIndexes.includes(tdIdx) || hasInput) {
             td.style.filter = ''
           } else if (tdIdx === targetIndex && !excludeIndexes.includes(tdIdx)) {
             td.style.filter = 'blur(6px)'
@@ -50,7 +54,65 @@ function blurTableCommon({
   })
 }
 
-function blurTableHorizenCommon({ blurEmptyTd = true, excludeList = [] }) {
+function blurDataTable({
+  blurEmptyTd = true,
+  blurInput = true,
+  excludeList = [],
+  includeList = [],
+}) {
+  let excludeIndexes = []
+  let targetIndex = -1
+
+  ;[...document.querySelectorAll('.v-data-table table')].forEach(
+    (table, idx) => {
+      console.log('blur extension - matched table: ', table)
+      const ths = Array.from(table.querySelectorAll('thead tr th'))
+      if (idx % 2 === 0 && ths.length) {
+        excludeIndexes = ths
+          .map((th, idx) =>
+            excludeList.some((ex) =>
+              th.textContent?.replace(/\s/g, '').includes(ex.replace(/\s/g, ''))
+            ) ||
+            (blurEmptyTd && th.textContent === '')
+              ? idx
+              : -1
+          )
+          .filter((idx) => idx !== -1)
+        targetIndex = ths.findIndex((th) =>
+          includeList.some((ex) =>
+            th.textContent?.replace(/\s/g, '').includes(ex.replace(/\s/g, ''))
+          )
+        )
+      }
+
+      if (idx % 2 === 1) {
+        table.querySelectorAll('tbody tr').forEach((tr) => {
+          tr.querySelectorAll('td').forEach((td, tdIdx) => {
+            // blurInput 체크: td의 children에 input이 있으면 blur 미적용
+
+            const hasInput = !blurInput && td.querySelector('input')
+            if (excludeIndexes.includes(tdIdx) || hasInput) {
+              td.style.filter = ''
+            } else if (
+              tdIdx === targetIndex &&
+              !excludeIndexes.includes(tdIdx)
+            ) {
+              td.style.filter = 'blur(6px)'
+            } else {
+              td.style.filter = 'blur(6px)'
+            }
+          })
+        })
+      }
+    }
+  )
+}
+
+function blurTableHorizenCommon({
+  blurEmptyTd = true,
+  blurInput = true,
+  excludeList = [],
+}) {
   document.querySelectorAll('.table-common.horizon').forEach((table) => {
     console.log('blur extension - matched table: ', table)
     table.querySelectorAll('tr').forEach((tr) => {
@@ -60,6 +122,8 @@ function blurTableHorizenCommon({ blurEmptyTd = true, excludeList = [] }) {
         if (cell.tagName.toLowerCase() === 'th') continue
 
         const prevCell = cells[i - 1]
+        // blurInput 체크: cell의 children에 input이 있으면 blur 미적용
+        const hasInput = !blurInput && cell.querySelector('input')
         if (
           prevCell &&
           prevCell.tagName.toLowerCase() === 'th' &&
@@ -70,6 +134,8 @@ function blurTableHorizenCommon({ blurEmptyTd = true, excludeList = [] }) {
           ) ||
             (blurEmptyTd && prevCell.textContent === ''))
         ) {
+          cell.style.filter = ''
+        } else if (hasInput) {
           cell.style.filter = ''
         } else {
           cell.style.filter = 'blur(6px)'
@@ -139,6 +205,9 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
         case 'blurPrimevueTable':
           blurPrimevueTable(action.params)
           break
+        case 'blurDataTable':
+          blurDataTable(action.params)
+          break
       }
     })
   } else if (msg.type === 'blurTableCommon') {
@@ -149,5 +218,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     blurBySelectorList(msg.params)
   } else if (msg.type === 'blurPrimevueTable') {
     blurPrimevueTable(msg.params)
+  } else if (msg.type === 'blurDataTable') {
+    blurDataTable(msg.params)
   }
 })

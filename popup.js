@@ -1,10 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   const allInputs = [
     'common-blurEmptyTd',
+    'common-blurInput',
     'common-excludeList',
     'common-includeList',
     'horizen-blurEmptyTd',
+    'horizen-blurInput',
     'horizen-excludeList',
+    'datatable-blurEmptyTd',
+    'datatable-blurInput',
+    'datatable-excludeList',
+    'datatable-includeList',
     'selector-list',
     'primevue-blurEmptyTd',
     'primevue-excludeList',
@@ -46,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('run-common').addEventListener('click', () => {
   const blurEmptyTd = document.getElementById('common-blurEmptyTd').checked
+  const blurInput = document.getElementById('common-blurInput').checked
   const excludeList = document
     .getElementById('common-excludeList')
     .value.split(',')
@@ -60,7 +67,7 @@ document.getElementById('run-common').addEventListener('click', () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const message = {
       type: 'blurTableCommon',
-      params: { blurEmptyTd, excludeList, includeList },
+      params: { blurEmptyTd, blurInput, excludeList, includeList },
     }
     console.log('Sending message to tab:', tabs[0].id, message)
     chrome.tabs.sendMessage(tabs[0].id, message)
@@ -69,6 +76,7 @@ document.getElementById('run-common').addEventListener('click', () => {
 
 document.getElementById('run-horizen').addEventListener('click', () => {
   const blurEmptyTd = document.getElementById('horizen-blurEmptyTd').checked
+  const blurInput = document.getElementById('horizen-blurInput').checked
   const excludeList = document
     .getElementById('horizen-excludeList')
     .value.split(',')
@@ -78,7 +86,7 @@ document.getElementById('run-horizen').addEventListener('click', () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const message = {
       type: 'blurTableHorizenCommon',
-      params: { blurEmptyTd, excludeList },
+      params: { blurEmptyTd, blurInput, excludeList },
     }
     console.log('Sending message to tab:', tabs[0].id, message)
     chrome.tabs.sendMessage(tabs[0].id, message)
@@ -120,9 +128,34 @@ document.getElementById('run-primevue').addEventListener('click', () => {
   })
 })
 
+document.getElementById('run-datatable').addEventListener('click', () => {
+  const blurEmptyTd = document.getElementById('datatable-blurEmptyTd').checked
+  const blurInput = document.getElementById('datatable-blurInput').checked
+  const excludeList = document
+    .getElementById('datatable-excludeList')
+    .value.split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+  const includeList = document
+    .getElementById('datatable-includeList')
+    .value.split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const message = {
+      type: 'blurDataTable',
+      params: { blurEmptyTd, blurInput, excludeList, includeList },
+    }
+    console.log('Sending message to tab:', tabs[0].id, message)
+    chrome.tabs.sendMessage(tabs[0].id, message)
+  })
+})
+
 document.getElementById('run-detailed').addEventListener('click', () => {
   const commonBlurEmptyTd =
     document.getElementById('common-blurEmptyTd').checked
+  const commonBlurInput = document.getElementById('common-blurInput').checked
   const commonExcludeList = document
     .getElementById('common-excludeList')
     .value.split(',')
@@ -137,6 +170,7 @@ document.getElementById('run-detailed').addEventListener('click', () => {
   const horizenBlurEmptyTd = document.getElementById(
     'horizen-blurEmptyTd'
   ).checked
+  const horizenBlurInput = document.getElementById('horizen-blurInput').checked
   const horizenExcludeList = document
     .getElementById('horizen-excludeList')
     .value.split(',')
@@ -151,6 +185,7 @@ document.getElementById('run-detailed').addEventListener('click', () => {
           type: 'blurTableCommon',
           params: {
             blurEmptyTd: commonBlurEmptyTd,
+            blurInput: commonBlurInput,
             excludeList: commonExcludeList,
             includeList: commonIncludeList,
           },
@@ -159,6 +194,7 @@ document.getElementById('run-detailed').addEventListener('click', () => {
           type: 'blurTableHorizenCommon',
           params: {
             blurEmptyTd: horizenBlurEmptyTd,
+            blurInput: horizenBlurInput,
             excludeList: horizenExcludeList,
           },
         },
@@ -209,6 +245,7 @@ document.getElementById('run-status').addEventListener('click', () => {
 document.getElementById('run-all').addEventListener('click', () => {
   const commonBlurEmptyTd =
     document.getElementById('common-blurEmptyTd').checked
+  const commonBlurInput = document.getElementById('common-blurInput').checked
   const commonExcludeList = document
     .getElementById('common-excludeList')
     .value.split(',')
@@ -223,6 +260,7 @@ document.getElementById('run-all').addEventListener('click', () => {
   const horizenBlurEmptyTd = document.getElementById(
     'horizen-blurEmptyTd'
   ).checked
+  const horizenBlurInput = document.getElementById('horizen-blurInput').checked
   const horizenExcludeList = document
     .getElementById('horizen-excludeList')
     .value.split(',')
@@ -251,6 +289,7 @@ document.getElementById('run-all').addEventListener('click', () => {
           type: 'blurTableCommon',
           params: {
             blurEmptyTd: commonBlurEmptyTd,
+            blurInput: commonBlurInput,
             excludeList: commonExcludeList,
             includeList: commonIncludeList,
           },
@@ -259,6 +298,7 @@ document.getElementById('run-all').addEventListener('click', () => {
           type: 'blurTableHorizenCommon',
           params: {
             blurEmptyTd: horizenBlurEmptyTd,
+            blurInput: horizenBlurInput,
             excludeList: horizenExcludeList,
           },
         },

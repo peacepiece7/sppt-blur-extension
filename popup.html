@@ -14,6 +14,9 @@
         <input type="checkbox" id="common-blurEmptyTd" checked />
         공백 셀 블러 여부 </label
       ><br />
+      <label style="margin-left: 1em">
+        <input type="checkbox" id="common-blurInput" checked /> 입력 블러 여부 </label
+      ><br />
       <div class="input-wrapper">
         <input
           id="common-excludeList"
@@ -39,6 +42,9 @@
         ><input type="checkbox" id="horizen-blurEmptyTd" checked /> 공백 셀 블러
         여부</label
       ><br />
+      <label style="margin-left: 1em">
+        <input type="checkbox" id="horizen-blurInput" checked /> 입력 블러 여부 </label
+      ><br />
       <div class="input-wrapper">
         <input
           id="horizen-excludeList"
@@ -51,6 +57,35 @@
     </fieldset>
 
     <fieldset>
+      <legend>데이터 테이블 블러</legend>
+      <label>
+        <input type="checkbox" id="datatable-blurEmptyTd" checked />
+        공백 셀 블러 여부 </label
+      ><br />
+      <label style="margin-left: 1em">
+        <input type="checkbox" id="datatable-blurInput" checked /> 입력 블러
+        여부 </label
+      ><br />
+      <div class="input-wrapper">
+        <input
+          id="datatable-excludeList"
+          placeholder="제외 컬럼 (쉼표로 구분)"
+        /><button class="reset-btn" data-target="datatable-excludeList">
+          초기화
+        </button>
+      </div>
+      <div class="input-wrapper">
+        <input
+          id="datatable-includeList"
+          placeholder="포함 컬럼 (쉼표로 구분)"
+        /><button class="reset-btn" data-target="datatable-includeList">
+          초기화
+        </button>
+      </div>
+      <button id="run-datatable">실행</button>
+    </fieldset>
+
+    <fieldset>
       <legend>셀렉터 리스트 블러</legend>
       <div class="input-wrapper">
         <input
@@ -60,7 +95,7 @@
       </div>
       <button id="run-selector">실행</button>
       <span class="example"
-        >기본값: #pv_id_1 > span, .navbar-user, .text-box-tx</span
+        >기본값: #data-pv_id_1 > span, .navbar-user, .text-box-tx</span
       >
     </fieldset>
 
