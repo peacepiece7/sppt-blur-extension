@@ -44,9 +44,9 @@ function blurTableCommon({
           if (excludeIndexes.includes(tdIdx) || hasInput) {
             td.style.filter = ''
           } else if (tdIdx === targetIndex && !excludeIndexes.includes(tdIdx)) {
-            td.style.filter = 'blur(6px)'
+            td.style.filter = 'blur(3px)'
           } else {
-            td.style.filter = 'blur(6px)'
+            td.style.filter = 'blur(3px)'
           }
         })
       })
@@ -97,9 +97,9 @@ function blurDataTable({
               tdIdx === targetIndex &&
               !excludeIndexes.includes(tdIdx)
             ) {
-              td.style.filter = 'blur(6px)'
+              td.style.filter = 'blur(3px)'
             } else {
-              td.style.filter = 'blur(6px)'
+              td.style.filter = 'blur(3px)'
             }
           })
         })
@@ -138,7 +138,7 @@ function blurTableHorizenCommon({
         } else if (hasInput) {
           cell.style.filter = ''
         } else {
-          cell.style.filter = 'blur(6px)'
+          cell.style.filter = 'blur(3px)'
         }
       }
     })
@@ -149,7 +149,7 @@ function blurBySelectorList({ list = [] }) {
   console.log('blur extension - matched list: ', list)
   list?.forEach((item) => {
     document.querySelectorAll(item).forEach((item) => {
-      item.style.filter = 'blur(6px)'
+      item.style.filter = 'blur(3px)'
       item.style.pointerEvents = 'none'
       item.style.userSelect = 'none'
     })
@@ -181,7 +181,7 @@ function blurPrimevueTable({ blurEmptyTd = true, excludeList = [] }) {
         div.style.filter = ''
         div.style.opacity = ''
       } else {
-        div.style.filter = 'blur(6px)'
+        div.style.filter = 'blur(3px)'
         div.style.opacity = '0.5'
       }
     })
